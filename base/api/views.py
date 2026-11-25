@@ -1,7 +1,8 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 from base.models import Room
-from.serializers import RoomSerializer
+from .serializers import RoomSerializer
 
 @api_view(["GET"])
 def getRoutes(request):
@@ -16,12 +17,14 @@ def getRoutes(request):
 
 @api_view(["GET"])
 def getRooms(request):
-    rooms=Room.objects.all()
+    rooms = Room.objects.select_related('host', 'topic').prefetch_related(
+        'participants'
+    )
     serializer = RoomSerializer(rooms, many=True)
     return Response(serializer.data)
 
 @api_view(["GET"])
 def getRoom(request, pk):
-    room=Room.objects.get(id = pk)
+    room = get_object_or_404(Room, id=pk)
     serializer = RoomSerializer(room, many=False)
     return Response(serializer.data)

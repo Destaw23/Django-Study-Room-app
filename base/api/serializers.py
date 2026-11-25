@@ -5,4 +5,5 @@ from base.models import Room
 class RoomSerializer(ModelSerializer):
     class Meta:
         model = Room
-        fields ='__all__'
+        fields = ['id', 'name', 'description', 'topic', 'host', 'participants', 'updated', 'created']
+        read_only_fields = fields

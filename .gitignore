@@ -1,0 +1,17 @@
+.env
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.sqlite3-*
+media/*
+!media/icon/
+media/icon/*
+!media/icon/Studyroom.png
+staticfiles/
+.pytest_cache/
+.coverage
+coverage.xml
+*.log

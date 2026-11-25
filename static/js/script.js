@@ -53,10 +53,46 @@ if (dropdownButton) {
   });
 }
 
+const themeToggle = document.querySelector("#theme-toggle");
+if (themeToggle) {
+  const themeIconPath = themeToggle.querySelector("#theme-icon-path");
+  const themeIconPaths = {
+    sun: "M12 2v2m0 16v2m10-10h-2M4 12H2m16.07-6.07-1.42 1.42M7.35 16.65l-1.42 1.42m12.14 0-1.42-1.42M7.35 7.35 5.93 5.93M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z",
+    moon: "M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.463.402.807a6.5 6.5 0 0 0 8.268 8.268c.344-.215.829-.003.803.397",
+  };
+
+  const applyTheme = (theme) => {
+    const lightModeEnabled = theme === "light";
+    document.documentElement.dataset.theme = lightModeEnabled ? "light" : "dark";
+    themeIconPath.setAttribute(
+      "d",
+      lightModeEnabled ? themeIconPaths.moon : themeIconPaths.sun
+    );
+    themeToggle.setAttribute("aria-pressed", String(lightModeEnabled));
+    themeToggle.setAttribute(
+      "aria-label",
+      `Switch to ${lightModeEnabled ? "dark" : "light"} mode`
+    );
+    themeToggle.title = `Switch to ${lightModeEnabled ? "dark" : "light"} mode`;
+  };
+
+  applyTheme(document.documentElement.dataset.theme || "dark");
+  themeToggle.addEventListener("click", () => {
+    const nextTheme =
+      document.documentElement.dataset.theme === "light" ? "dark" : "light";
+    applyTheme(nextTheme);
+    try {
+      window.localStorage.setItem("study-room-theme", nextTheme);
+    } catch (error) {
+      console.warn("The theme preference could not be saved.", error);
+    }
+  });
+}
+
 // Upload Image
 const photoInput = document.querySelector("#avatar");
 const photoPreview = document.querySelector("#preview-avatar");
-if (photoInput)
+if (photoInput && photoPreview)
   photoInput.onchange = () => {
     const [file] = photoInput.files;
     if (file) {

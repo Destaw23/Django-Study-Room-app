@@ -5,8 +5,19 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="{% static 'styles/style.css' %}" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="icon" type="image/png" sizes="128x128" href="{% get_media_prefix %}icon/Studyroom.png?v=3" />
+    <script>
+      try {
+        const savedTheme = window.localStorage.getItem("study-room-theme");
+        if (savedTheme === "light" || savedTheme === "dark") {
+          document.documentElement.dataset.theme = savedTheme;
+        }
+      } catch (error) {
+        console.warn("The saved theme preference could not be read.", error);
+      }
+    </script>
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}?v=5" />
     <title>StudyRoom - Find study partners around the world!</title>
   </head>
 
@@ -28,7 +39,7 @@
 
     {% endblock  %}
    
-    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/script.js' %}?v=3"></script>
   </body>
 </html>
 

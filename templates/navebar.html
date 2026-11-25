@@ -2,7 +2,7 @@
 <header class="header header--loggedIn">
       <div class="container">
         <a href="{% url 'home'  %}" class="header__logo">
-        <img src="{% static 'images/logo.svg' %}" />
+        <img src="{% get_media_prefix %}icon/Studyroom.png" alt="StudyRoom logo" />
           <h1>StudyRoom</h1>
         </a>
         <form class="header__search" method="GET" action="{% url 'home'%}">
@@ -17,14 +17,28 @@
           </label>
         </form>
         <nav class="header__menu">
-          
+          <button
+            type="button"
+            class="theme-toggle"
+            id="theme-toggle"
+            aria-label="Toggle light mode"
+            aria-pressed="false"
+            title="Toggle light mode">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path id="theme-icon-path" d="M12 2v2m0 16v2m10-10h-2M4 12H2m16.07-6.07-1.42 1.42M7.35 16.65l-1.42 1.42m12.14 0-1.42-1.42M7.35 7.35 5.93 5.93M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z" />
+            </svg>
+          </button>
 
           <!-- Logged In -->
           {% if request.user.is_authenticated %}
           <div class="header__user">
-            <a href="profile.html">
+            <a href="{% url 'user-profile' request.user.id %}">
               <div class="avatar avatar--medium active">
-                <img src="https://randomuser.me/api/portraits/men/37.jpg" />
+                {% if request.user.profile.avatar %}
+                <img src="{{ request.user.profile.avatar.url }}" alt="{{ request.user.username }}'s profile image" />
+                {% else %}
+                <img src="{% static 'images/icons/user.svg' %}" alt="Default profile image" />
+                {% endif %}
               </div>
               <p>{{request.user.username}} <span>@{{request.user.username}}</span></p>
             </a>
@@ -52,7 +66,9 @@
               </svg>
               Settings</a
             >
-            <a href="{% url 'logout' %}" class="dropdown-link"
+            <form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button type="submit" class="dropdown-link"
               ><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                 <title>sign-out</title>
                 <path
@@ -62,7 +78,9 @@
                   d="M21.879 21.293l1.414 1.414 6.707-6.707-6.707-6.707-1.414 1.414 4.293 4.293h-14.172v2h14.172l-4.293 4.293z"
                 ></path>
               </svg>
-              Logout</a>
+                Logout
+              </button>
+            </form>
           </div>
         </nav>
       </div>
