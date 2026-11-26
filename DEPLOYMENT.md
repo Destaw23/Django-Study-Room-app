@@ -66,7 +66,7 @@ PythonAnywhere can clone a GitHub repository. Push the version you intend to dep
 Create a free PythonAnywhere account, then open a **Bash console** and clone your repository:
 
 ```sh
-git clone https://github.com/Destaw23/StudyRoom-by-using-Django.git StudyRoom
+git clone https://github.com/Destaw23/Django-Study-Room-app.git StudyRoom
 cd ~/StudyRoom
 ```
 
@@ -138,6 +138,6 @@ This serves the project's collected CSS/JavaScript and uploaded profile images. 
 
 ### 6. Verify the deployment
 
-Open `https://USERNAME.pythonanywhere.com/`, sign in, test profile-image uploads, and visit `/admin/`. If the site fails, inspect the **error log** linked from the Web tab. If you update the code later, pull the changes, run migrations and `collectstatic` when needed, then reload the web app.
+Open the hostname shown in the Web tab, sign in, test profile-image uploads, and visit `/admin/`. If the site fails, inspect the **error log** linked from the Web tab. If you update the code later, run `git pull origin main`, apply migrations and `collectstatic` when needed, then reload the web app.
 
 For official details, see PythonAnywhere's guides for [deploying an existing Django project](https://help.pythonanywhere.com/pages/DeployExistingDjangoProject/) and [Django static files](https://help.pythonanywhere.com/pages/DjangoStaticFiles/).
